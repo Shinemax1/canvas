@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="can" width="400" height="300" style="border:1px solid #000"></canvas>
+    <script>
+        var can = document.getElementById('can');
+        var ctx = can.getContext('2d');
+        //填充的颜色
+        ctx.fillStyle = 'blue';
+        ctx.fillRect(50,50,100,60);
+        //矩形
+        ctx.strokeStyle = 'red';
+        ctx.lineWidth = 6;
+        ctx.lineJoin = 'miter';
+        ctx.strokeRect(100,150,100,65);
+        //圆角
+        ctx.lineJoin = 'round';
+        ctx.strokeRect(200,200,100,65);
+        //方角
+        ctx.strokeStyle = 'green';
+        ctx.lineWidth = 7;
+        ctx.lineJoin = 'bevel';
+        ctx.strokeRect(100,80,300,65);
+    </script>
+</body>
+</html>

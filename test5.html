@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="can" width="400" height="300" style="border:1px solid #000"></canvas>
+    <script>
+        var can = document.getElementById('can');
+        var ctx = can.getContext('2d');
+        //绘制曲线（三个点绘制曲线）
+        ctx.beginPath();
+        //第一个点坐标
+        ctx.moveTo(100,60);
+        //x,y,x1,y1,r
+        ctx.arcTo(200,60,180,150,60);
+
+        ctx.closePath();
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = 'orange';
+        ctx.stroke();
+
+    </script>
+</body>
+</html>

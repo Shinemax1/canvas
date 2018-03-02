@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="can" width="400" height="300" style="border:1px solid #000"></canvas>
+    <script>
+        var can = document.getElementById('can');
+        var ctx = can.getContext('2d');
+        
+        var img = new Image();
+        img.src = './锯子.png';
+
+        img.onload = function(){
+            //画原图的大小(参数是坐标)
+            ctx.drawImage(img,20,20);
+            //缩放(坐标，宽高)
+            ctx.drawImage(img,300,20,80,120);
+            //截取(从哪点开始截，截多少，放在哪个位置，缩放多少)
+            ctx.drawImage(img,20,20,100,120,500,20,200,240);
+        }
+
+    </script>
+</body>
+</html>

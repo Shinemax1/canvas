@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .alert{
+            width: 200px;
+            height: 100px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -100px;
+            margin-top: -50px;
+            display: none;
+            border-radius: 20px;
+            background-color: red;
+        }
+        p{
+            line-height: 100px;
+            text-align: center;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+        <div class="alert">
+                <p>sssss</p>
+            </div>
+    <div style="width:600px;height:600px;margin:30px auto;border:1px solid #000;background-color:#000;">
+        <canvas id="can" width="600" height="600"></canvas>
+    </div>
+    
+    <script>
+        var alertL = document.getElementsByClassName('alert')[0];
+        var p = document.getElementsByTagName('p')[0];
+        var can = document.getElementById('can');
+        var ctx = can.getContext('2d');
+        var map = new Array(15);
+        var m = 0;
+        for (var i = 0; i < 15; i++) {
+            map[i] = new Array(15);
+            for (var j = 0; j < 15; j++) {
+                map[i][j] = 0;
+            }
+        }
+        init();
+
+        function init() {
+            ctx.strokeStyle = '#fff';
+            for (var i = 0; i < 15; i++) {
+                for (var j = 0; j < 15; j++) {
+                    ctx.strokeRect(j * 40, i * 40, 40, 40);
+                }
+            }
+        }
+
+        can.onclick = function (e) {
+            var offsetWidth = (screen.width - 600) / 2;
+            var x = e.pageX - offsetWidth;
+            var y = e.pageY - 31;
+            if (x >= 20) {
+                var col = parseInt((x - 20) / 40) + 1;
+            } else {
+                var col = 0;
+            }
+            if (y >= 20) {
+                var row = parseInt((y - 20) / 40) + 1;
+            } else {
+                var row = 0;
+            }
+            if (m % 2 == 0 && !map[col][row]) {
+                ctx.beginPath();
+                ctx.arc(col * 40, row * 40, 15, 0, 2 * Math.PI);
+                ctx.closePath();
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+                map[col][row] = 1;
+                console.log('11');
+            } else if(m % 2 == 1 && !map[col][row]){
+                ctx.beginPath();
+                ctx.arc(col * 40, row * 40, 15, 0, 2 * Math.PI);
+                ctx.closePath();
+                ctx.fillStyle = '#fff';
+                ctx.fill();
+                map[col][row] = 2;                
+            }
+            m++;
+            isWin(map[col][row],col,row);
+        }
+
+        function isWin(t,col,row){
+            var total = 1;
+            var totalcol = col;
+            var totalrow = row;
+            while(col-1>=0&&map[col-1][row]==t){
+                col--;
+                total++;
+            }
+            col = totalcol;
+            row = totalrow;
+            while(col+1<15&&map[col+1][row]==t){
+                col++;
+                total++;
+            }
+            win(total,t);
+
+            col = totalcol;
+            row = totalrow;
+            total =1;
+            while(row-1>=0&&map[col][row-1]==t){
+                row--;
+                total++;
+            }
+            col = totalcol;
+            row = totalrow;
+            while(row+1<15&&map[col][row+1]==t){
+                row++;
+                total++;
+            }
+            win(total,t);
+
+            col = totalcol;
+            row = totalrow;
+            total =1;
+            while(row-1>=0&&col+1<15&&map[col+1][row-1]==t){
+                row--;
+                col++;
+                total++;
+            }
+            col = totalcol;
+            row = totalrow;
+            while(row+1<15&&col-1>=0&&map[col-1][row+1]==t){
+                row++;
+                col--;
+                total++;
+            }
+            win(total,t);
+
+            col = totalcol;
+            row = totalrow;
+            total =1;
+            while(col-1>=0&&row-1>=0&&map[col-1][row-1]==t){
+                row--;
+                col--;
+                total++;
+            }
+            col = totalcol;
+            row = totalrow;
+            while(row+1<15&&col+1<15&&map[col+1][row+1]==t){
+                row++;
+                col++;
+                total++;
+            }
+            win(total,t);
+        }
+
+        function win(total,t){
+            if(total >= 5){
+                if(t==1){
+                    alertL.style.display = 'block';
+                    p.innerHTML = '空方赢';
+                }else{
+                    alertL.style.display = 'block';
+                    p.innerHTML = '实方赢';
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

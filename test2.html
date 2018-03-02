@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="can" width="400" height="300" style="border:1px solid #000"></canvas>
+    <script>
+        var can = document.getElementById('can');
+        var ctx = can.getContext('2d');
+        //实心的字体
+        ctx.fillStyle = 'blue';        
+        //垂直中线居中对齐
+        ctx.textAlign = 'center';
+        ctx.font = "34px 微软雅黑";
+        ctx.fillText('dajiahao',100,150);
+
+        //空心的字体
+        ctx.strokeStyle = 'red';
+        //垂直中线居中对齐
+        ctx.textBaseAlign = 'center';
+        ctx.font = "bold 34px 微软雅黑";
+        ctx.strokeText('dajiahao',100,200);
+    </script>
+</body>
+</html>
