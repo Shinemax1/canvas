@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
-        .alert{
+        .alert {
             width: 200px;
             height: 100px;
             position: absolute;
@@ -19,7 +19,8 @@
             border-radius: 20px;
             background-color: red;
         }
-        p{
+
+        p {
             line-height: 100px;
             text-align: center;
             margin: 0;
@@ -28,13 +29,13 @@
 </head>
 
 <body>
-        <div class="alert">
-                <p>sssss</p>
-            </div>
+    <div class="alert">
+        <p>sssss</p>
+    </div>
     <div style="width:600px;height:600px;margin:30px auto;border:1px solid #000;background-color:#000;">
         <canvas id="can" width="600" height="600"></canvas>
     </div>
-    
+
     <script>
         var alertL = document.getElementsByClassName('alert')[0];
         var p = document.getElementsByTagName('p')[0];
@@ -60,6 +61,15 @@
         }
 
         can.onclick = function (e) {
+            //防止点击过快
+            var nowTime = new Date().getTime();
+            var clickTime = this.getAttribute('ctime');
+            if (nowTime - clickTime < 500) {
+                alert('点击过快！');
+                return;
+            } else {
+                this.setAttribute('ctime', nowTime);
+            }
             var offsetWidth = (screen.width - 600) / 2;
             var x = e.pageX - offsetWidth;
             var y = e.pageY - 31;
@@ -73,6 +83,10 @@
             } else {
                 var row = 0;
             }
+            //是否点在同一个位置
+            if(map[col][row]){
+                return;
+            }
             if (m % 2 == 0 && !map[col][row]) {
                 ctx.beginPath();
                 ctx.arc(col * 40, row * 40, 15, 0, 2 * Math.PI);
@@ -82,90 +96,90 @@
                 ctx.stroke();
                 map[col][row] = 1;
                 console.log('11');
-            } else if(m % 2 == 1 && !map[col][row]){
+            } else if (m % 2 == 1 && !map[col][row]) {
                 ctx.beginPath();
                 ctx.arc(col * 40, row * 40, 15, 0, 2 * Math.PI);
                 ctx.closePath();
                 ctx.fillStyle = '#fff';
                 ctx.fill();
-                map[col][row] = 2;                
+                map[col][row] = 2;
             }
             m++;
-            isWin(map[col][row],col,row);
+            isWin(map[col][row], col, row);
         }
 
-        function isWin(t,col,row){
+        function isWin(t, col, row) {
             var total = 1;
             var totalcol = col;
             var totalrow = row;
-            while(col-1>=0&&map[col-1][row]==t){
+            while (col - 1 >= 0 && map[col - 1][row] == t) {
                 col--;
                 total++;
             }
             col = totalcol;
             row = totalrow;
-            while(col+1<15&&map[col+1][row]==t){
+            while (col + 1 < 15 && map[col + 1][row] == t) {
                 col++;
                 total++;
             }
-            win(total,t);
+            win(total, t);
 
             col = totalcol;
             row = totalrow;
-            total =1;
-            while(row-1>=0&&map[col][row-1]==t){
+            total = 1;
+            while (row - 1 >= 0 && map[col][row - 1] == t) {
                 row--;
                 total++;
             }
             col = totalcol;
             row = totalrow;
-            while(row+1<15&&map[col][row+1]==t){
+            while (row + 1 < 15 && map[col][row + 1] == t) {
                 row++;
                 total++;
             }
-            win(total,t);
+            win(total, t);
 
             col = totalcol;
             row = totalrow;
-            total =1;
-            while(row-1>=0&&col+1<15&&map[col+1][row-1]==t){
+            total = 1;
+            while (row - 1 >= 0 && col + 1 < 15 && map[col + 1][row - 1] == t) {
                 row--;
                 col++;
                 total++;
             }
             col = totalcol;
             row = totalrow;
-            while(row+1<15&&col-1>=0&&map[col-1][row+1]==t){
+            while (row + 1 < 15 && col - 1 >= 0 && map[col - 1][row + 1] == t) {
                 row++;
                 col--;
                 total++;
             }
-            win(total,t);
+            win(total, t);
 
             col = totalcol;
             row = totalrow;
-            total =1;
-            while(col-1>=0&&row-1>=0&&map[col-1][row-1]==t){
+            total = 1;
+            while (col - 1 >= 0 && row - 1 >= 0 && map[col - 1][row - 1] == t) {
                 row--;
                 col--;
                 total++;
             }
             col = totalcol;
             row = totalrow;
-            while(row+1<15&&col+1<15&&map[col+1][row+1]==t){
+            while (row + 1 < 15 && col + 1 < 15 && map[col + 1][row + 1] == t) {
                 row++;
                 col++;
                 total++;
             }
-            win(total,t);
+            win(total, t);
         }
 
-        function win(total,t){
-            if(total >= 5){
-                if(t==1){
+        function win(total, t) {
+            if (total >= 5) {
+                if (t == 1) {
                     alertL.style.display = 'block';
                     p.innerHTML = '空方赢';
-                }else{
+                } else {
                     alertL.style.display = 'block';
                     p.innerHTML = '实方赢';
                 }
